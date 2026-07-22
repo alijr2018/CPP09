@@ -7,5 +7,14 @@ int main(int ac, char **av)
         fprintf(stderr, "Error: could not open file.\n");//change it to cpp 
         return 1;
     }
-    std::string arg = av[1];
+    try
+    {
+        std::string arg = av[1];
+
+    }
+    catch(const std::exception &e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+
 }
