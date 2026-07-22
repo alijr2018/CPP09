@@ -3,10 +3,9 @@
 Bitcoin::Bitcoin(){};
 Bitcoin::~Bitcoin(){};
 
-void Bitcoin::start(std::string &j)
+void Bitcoin::start(std::ifstream &input,std::ifstream &data)
 {
-    std::ifstream input(j.c_str());
-    if (!input)
-        throw std::runtime_error("file won't open");
+    // (void)j;
+    while(getline(, ))
 }
 

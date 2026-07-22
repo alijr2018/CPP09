@@ -15,7 +15,9 @@ class Bitcoin
         ~Bitcoin();
         Bitcoin& operator=(const Bitcoin &h);
 
-        void start(std::string &j);
+        // void start(std::string &j);
+        void start(std::ifstream &input,std::ifstream &data);
+
 
 };
 
