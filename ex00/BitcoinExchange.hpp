@@ -5,6 +5,8 @@
 #include <fstream>
 #include <ostream>
 #include <algorithm>
+#include <map>
+#include <sstream>
 // #include <stdio.h>
 
 class Bitcoin
