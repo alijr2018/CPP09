@@ -21,7 +21,7 @@ bool validDate(std::string &date)
     if (year < 0 || month < 1 || month > 12)
         return false;
         
-    if (day < 1 || day > 31) // check month that has 28 day
+    if (day < 1 || day > 31) // check month that has 28 day check leap year
         return false;
     return true;
 }
@@ -105,10 +105,6 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         dates.erase(dates.find_last_not_of(" \t") + 1);//it could be failure
         values.erase(0, values.find_first_not_of(" \t"));//it could be failure
 
-
-    
-
-
         //add validate date and value
 
         if (!validDate(dates))
@@ -162,9 +158,7 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
                 --rate;
             }
         
-            std::cout << it->first << " => "
-                      << it->second << " = "
-                      << it->second * rate->second << std::endl;
+            std::cout << it->first << " => " << it->second << " = " << it->second * rate->second << std::endl;
         }
     }
     // for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); it++)
