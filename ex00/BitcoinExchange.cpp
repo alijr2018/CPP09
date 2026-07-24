@@ -20,9 +20,14 @@ bool validDate(std::string &date)
 
     if (year < 0 || month < 1 || month > 12)
         return false;
-        
-    if (day < 1 || day > 31) // check month that has 28 day check leap year
+
+    int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    bool leap= ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
+    if (leap)
+        days[1] = 29;
+    if (day < 1 || day > days[month - 1]) // check month that has 28 day check leap year
         return false;
+        
     return true;
 }
 
