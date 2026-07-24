@@ -3,7 +3,7 @@
 Bitcoin::Bitcoin(){};
 Bitcoin::~Bitcoin(){};
 
-bool validDate(std::string &date)
+bool validDate(const std::string &date)
 {
     if (date.size() != 10)
         return false;
@@ -31,7 +31,7 @@ bool validDate(std::string &date)
     return true;
 }
 
-bool validValue(std::string &value)
+bool validValue(const std::string &value)
 {
     bool dot = false;
     bool digit = false;
@@ -48,10 +48,6 @@ bool validValue(std::string &value)
         {
             digit = true;
         }
-        else if (value[i] == '-' && i == 0)
-        {
-            return false;
-        }
         else
         {
             return false;
@@ -63,10 +59,7 @@ bool validValue(std::string &value)
 
     float n = std::atof(value.c_str());
 
-    if (n < 0)
-        return false;
-
-    if (n > 1000)
+    if (n <= 0 || n > 1000)
         return false;
 
     return true;
@@ -75,22 +68,27 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
 {
     // (void)j;
 
-    std::map<std::string, float> bitin;
+    //std::map<std::string, float> bitin;
     std::map<std::string, float> bitout;
 
-    std::string in, da;
-    // std::getline(input, in);
-    if (!getline(input, in) || in != "date | value")
-        return;
-
-    if (!getline(data, in) || in != "date,exchange_rate")
-        return;
-
-    while(std::getline(data, da))// data parse
+    std::string line;
+    // std::getline(input, line);
+    if (!getline(input, line) || line != "date | value")
     {
-        std::stringstream parse(da);
-        std::string date;
-        std::string value;
+        throw std::runtime_error("Error: invalid input header.");
+       // return;
+    }
+
+    if (!getline(data, line) || line != "date,exchange_rate")
+    {
+        throw std::runtime_error("Error: invalid input header.");
+       // return;
+    }
+
+    while(std::getline(data, line))// data parse
+    {
+        std::stringstream parse(line);
+        std::string date, value;
 
         std::getline(parse, date, ',');
         std::getline(parse, value);
@@ -98,15 +96,15 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         bitout[date] = std::atof(value.c_str());
     }
 
-    while(std::getline(input, da))// input parse
+    while(std::getline(input, line))// input parse
     {
-        std::stringstream parse(da);
-        std::string dates;
-        std::string values;
+        std::stringstream parse(line);
+        std::string dates, values;
 
         std::getline(parse, dates, '|');
         std::getline(parse, values);
         
+        //check this trim later
         size_t pos = dates.find_last_not_of(" \t");
         if (pos != std::string::npos)
             dates.erase(pos + 1);
@@ -123,7 +121,7 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
 
         if (!validDate(dates))
         {
-            std::cout << "Error: Bad input => " << da << std::endl;
+            std::cout << "Error: Bad input => " << line << std::endl;
             continue;
         }
 
@@ -142,9 +140,10 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         float amount = std::atof(values.c_str());
         std::map<std::string, float>::iterator it = bitout.lower_bound(dates);
 
-        if (it == bitout.end())
-            --it;
-        else if (it->first != dates)
+//        if (it == bitout.end())
+//            --it;
+//        else if (it->first != dates)
+        if (it == bitout.end() || it->first != dates)
         {
             if (it == bitout.begin())
             {
@@ -154,26 +153,27 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
             --it;
         }
 
+        std::cout << std::fixed << std::setprecision(2);
         std::cout << dates << " => " << amount << " = " << amount * it->second << std::endl;
     
-        for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); ++it)
-        {
-            std::map<std::string, float>::iterator rate = bitout.lower_bound(it->first);
+        //for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); ++it)
+        //{
+            //std::map<std::string, float>::iterator rate = bitout.lower_bound(it->first);
         
-            if (rate == bitout.end())
-                --rate;
-            else if (rate->first != it->first)
-            {
-                if (rate == bitout.begin())
-                {
-                    std::cout << "Error: no earlier date." << std::endl;
-                    continue;
-                }
-                --rate;
-            }
+            //if (rate == bitout.end())//
+                //--rate;
+//            else if (rate->first != it->first)
+            // {
+// //                if (rate == bitout.begin())
+//                {
+//                    std::cout << "Error: no earlier date." << std::endl;
+//                    continue;
+//                }
+//                --rate;
+//            }
         
-            std::cout << it->first << " => " << it->second << " = " << it->second * rate->second << std::endl;
-        }
+          //  std::cout << it->first << " => " << it->second << " = " << it->second * rate->second << std::endl;
+       // }
     }
     // for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); it++)
     // {

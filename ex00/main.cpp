@@ -12,8 +12,10 @@ size_t strl(char *sx)
     }
     return i;
 }
-bool check(const std::string &h,const char *s)
+bool check(const std::string &h, const char *s)
 {
+    if (h.size() < 4)
+        return false;
     return (h.compare(h.size()-4, 4, s) == 0);
 }
 
@@ -54,6 +56,8 @@ int main(int ac, char **av)
     catch(const std::exception &e)
     {
         std::cout << e.what() << std::endl;
+        return 1;
     }
+    return 0;
 
 }

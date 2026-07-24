@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <map>
 #include <sstream>
+#include <iomanip>
 // #include <stdio.h>
 
 class Bitcoin
