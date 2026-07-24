@@ -107,8 +107,17 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         std::getline(parse, dates, '|');
         std::getline(parse, values);
         
-        dates.erase(dates.find_last_not_of(" \t") + 1);//it could be failure
-        values.erase(0, values.find_first_not_of(" \t"));//it could be failure
+        size_t pos = dates.find_last_not_of(" \t");
+        if (pos != std::string::npos)
+            dates.erase(pos + 1);
+        else
+            dates.clear();
+
+        pos = values.find_first_not_of(" \t");
+        if (pos != std::string::npos)
+            values.erase(0, pos);
+        else
+            values.clear();
 
         //add validate date and value
 
