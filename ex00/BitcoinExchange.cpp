@@ -75,13 +75,16 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
     // std::getline(input, line);
     if (!getline(input, line) || line != "date | value")
     {
-        throw std::runtime_error("Error: invalid input header.");
+        // throw std::runtime_error("Error: invalid input header.");
+        std::cout << "Error: invalid input header." << std::endl; 
        // return;
     }
 
     if (!getline(data, line) || line != "date,exchange_rate")
     {
-        throw std::runtime_error("Error: invalid input header.");
+        // throw std::runtime_error("Error: invalid data header.");
+        std::cout << "Error: invalid data header." << std::endl; 
+
        // return;
     }
 
@@ -140,9 +143,7 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         float amount = std::atof(values.c_str());
         std::map<std::string, float>::iterator it = bitout.lower_bound(dates);
 
-//        if (it == bitout.end())
-//            --it;
-//        else if (it->first != dates)
+
         if (it == bitout.end() || it->first != dates)
         {
             if (it == bitout.begin())
@@ -156,24 +157,7 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         std::cout << std::fixed << std::setprecision(2);
         std::cout << dates << " => " << amount << " = " << amount * it->second << std::endl;
     
-        //for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); ++it)
-        //{
-            //std::map<std::string, float>::iterator rate = bitout.lower_bound(it->first);
-        
-            //if (rate == bitout.end())//
-                //--rate;
-//            else if (rate->first != it->first)
-            // {
-// //                if (rate == bitout.begin())
-//                {
-//                    std::cout << "Error: no earlier date." << std::endl;
-//                    continue;
-//                }
-//                --rate;
-//            }
-        
-          //  std::cout << it->first << " => " << it->second << " = " << it->second * rate->second << std::endl;
-       // }
+
     }
     // for (std::map<std::string, float>::iterator it = bitin.begin(); it != bitin.end(); it++)
     // {

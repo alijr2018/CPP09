@@ -1,17 +1,17 @@
 #include "BitcoinExchange.hpp"
 
 
-size_t strl(char *sx)
-{
-    if (!sx)
-        return -1;
-    int i = 0;
-    while (sx[i])
-    {
-        i++;
-    }
-    return i;
-}
+// size_t strl(char *sx)
+// {
+//     if (!sx)
+//         return -1;
+//     int i = 0;
+//     while (sx[i])
+//     {
+//         i++;
+//     }
+//     return i;
+// }
 bool check(const std::string &h, const char *s)
 {
     if (h.size() < 4)
@@ -31,6 +31,7 @@ bool chfi(std::ifstream &q, const std::string &u, const char *s)
         throw std::runtime_error(std::string("the file isn't a ") + s + " file");
     return true;
 }
+
 int main(int ac, char **av)
 {
     if (ac != 2)
@@ -39,7 +40,7 @@ int main(int ac, char **av)
         return 1;
     }
     
-    try
+    try//remove try and catch
     {
         std::ifstream input;
         std::ifstream data;

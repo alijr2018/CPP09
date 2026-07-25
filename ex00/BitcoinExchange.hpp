@@ -8,6 +8,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
+// #include <exception>
 // #include <stdio.h>
 
 class Bitcoin
