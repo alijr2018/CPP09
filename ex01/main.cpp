@@ -20,22 +20,23 @@ long operation(long a, long b, const std::string &op)
     if (op == "/")
     {
         if (b == 0)
-            throw " zero";
+            std::cout << "can't divide by  zero" << std::endl;
         return a / b;
     }
-    throw "error";
+    std::cout << "Error operator not found" << std::endl;
+    return -1;
 }
 
 bool isnum(const std::string &arg)
 {
-    return arg.size() == 1&& std::isdigit(arg[0]);
+    return arg.size() == 1 && std::isdigit(arg[0]);
 }
 int main(int ac, char **av)
 {
-    std::cout << std::string(500, '~') << '\n';
+    // std::cout << std::string(500, '~') << '\n';
     if (ac != 2)
     {
-        std::cerr << "Error" << std::endl;
+        std::cerr << "Error , it must be like ./RPN" << "7 7 * 7 -" << std::endl;
         return 1;
     }
     
@@ -49,16 +50,21 @@ int main(int ac, char **av)
 
     std::stringstream ss(av[1]);
     std::string ch;
-    std::string result;
     while(ss >> ch)
     {
-        std::cout << ch << " ";
+        // std::cout << ch << " ";
         if (isnum(ch))
             num.push(ch[0] - '0');
+
         else
         {
             if (num.size() < 2)
-                throw "wd";
+            {
+                // std::cout << "Error it sould be a number between 0-9" << std::endl;
+                std::cout << "Error" << std::endl;
+                return 1;
+            }
+
             long b = num.top();
             num.pop();
 
@@ -70,4 +76,5 @@ int main(int ac, char **av)
     }
     // std::cout << num << std::endl;
     std::cout << num.top() << '\n';
+    return 0;
 }
