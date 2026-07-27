@@ -37,3 +37,18 @@
     // }
     // throw "error";
 // }
+
+RPN::RPN() {};
+
+RPN::~RPN() {};
+
+RPN::RPN(const RPN &h)
+{
+    (void)h;
+};
+
+RPN& RPN::operator=(const RPN &h)
+{
+    (void)h;
+    return *this;
+};
