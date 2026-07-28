@@ -19,7 +19,7 @@ class RPN
         ~RPN();
         RPN(const RPN &h);
         RPN& operator=(const RPN &h);
-
+        long operation(long a, long b, const std::string &op);
 
 };
 #endif

@@ -9,7 +9,7 @@ bool check(const std::string &h)
         return false;
     return true;
 }
-long operation(long a, long b, const std::string &op)
+long RPN::operation(long a, long b, const std::string &op)
 {
     if (op == "+")
         return a + b;
@@ -36,7 +36,7 @@ int main(int ac, char **av)
     // std::cout << std::string(500, '~') << '\n';
     if (ac != 2)
     {
-        std::cerr << "Error , it must be like ./RPN" << "7 7 * 7 -" << std::endl;
+        std::cerr << "Error , it must be like ./RPN" << " \" 7 7 * 7 - \" " << std::endl;
         return 1;
     }
     
@@ -45,9 +45,9 @@ int main(int ac, char **av)
     // std::stack k(atoi(av[1]));
     // std::stack q(av[1]);
     // char a = {"+", "-", "/"};
-    std::stack<int> num;// this will hold numbers
+    std::stack<long> num;// this will hold numbers
     // std::stack<int> op;// this will operation
-
+    RPN l;
     std::stringstream ss(av[1]);
     std::string ch;
     while(ss >> ch)
@@ -71,7 +71,7 @@ int main(int ac, char **av)
             long a = num.top();
             num.pop();
 
-            num.push(operation(a , b, ch));
+            num.push(l.operation(a , b, ch));
         }
     }
     // std::cout << num << std::endl;
