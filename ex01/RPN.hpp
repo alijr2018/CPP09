@@ -5,6 +5,8 @@
 #include <sstream>
 #include <stack>
 #include <cstdlib>
+#include <climits>
+#include <exception>
 
 
 // template <typename T = long>
