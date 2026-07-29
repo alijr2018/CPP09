@@ -43,6 +43,19 @@ bool validDate(const std::string &date)
     return true;
 }
 
+double change(const std::string &num)
+{
+    double value;
+    char *e;
+    errno = 0;
+    
+    value = strtod(num.c_str(), &e);
+
+    if (*e != '\0' || errno == ERANGE)
+        return -1;
+    return (value);
+}
+
 bool validValue(const std::string &value)
 {
     bool dot = false;
@@ -69,7 +82,8 @@ bool validValue(const std::string &value)
     if (!digit)
         return false;
 
-    float n = std::atof(value.c_str());
+    // float n = std::atof(value.c_str());
+    double n = change(value);
 
     if (n <= 0 || n > 1000)
         return false;
@@ -94,7 +108,7 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
     // (void)j;
 
     //std::map<std::string, float> bitin;
-    std::map<std::string, float> bitout;
+    std::map<std::string, double> bitout;
 
     std::string line;
     // std::getline(input, line);
@@ -145,7 +159,9 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         std::getline(parse, date, ',');
         std::getline(parse, value);
         
-        bitout[date] = std::atof(value.c_str());
+        // bitout[date] = std::atof(value.c_str());
+        bitout[date] = change(value);
+
     }
 
     while(std::getline(input, line))// input parse
@@ -183,7 +199,9 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
 
         if (!validValue(values))
         {
-            float n = atof(values.c_str());
+            // float n = atof(values.c_str());
+            double n = change(values);
+
             if (n > 1000)
                 std::cout << "Error: too large a number." << std::endl;
             else 
@@ -193,8 +211,11 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         }
 
 
-        float amount = std::atof(values.c_str());
-        std::map<std::string, float>::iterator it = bitout.lower_bound(dates);
+        // float amount = std::atof(values.c_str());
+        double amount = change(values);
+
+        // std::map<std::string, float>::iterator it = bitout.lower_bound(dates);
+        std::map<std::string, double>::iterator it = bitout.lower_bound(dates);
 
 
         if (it == bitout.end() || it->first != dates)

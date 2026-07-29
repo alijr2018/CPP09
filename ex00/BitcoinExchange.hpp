@@ -10,8 +10,6 @@
 #include <iomanip>
 #include <cstdlib>
 #include <cctype>
-// #include <exception>
-// #include <stdio.h>
 
 class Bitcoin
 {
