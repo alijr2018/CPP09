@@ -115,6 +115,11 @@ bool isnum(const std::string &arg)
 {
     return arg.size() == 1 && std::isdigit(static_cast<unsigned char>(arg[0]));
 }
+
+bool isOperator(const std::string &arg)
+{
+    return arg.size() == 1 && (arg[0] == '+' || arg[0] == '-' || arg[0] == '*' || arg[0] == '/');
+}
 int main(int ac, char **av)
 {
     // std::cout << std::string(500, '~') << '\n';
@@ -129,6 +134,12 @@ int main(int ac, char **av)
     // std::stack k(atoi(av[1]));
     // std::stack q(av[1]);
     // char a = {"+", "-", "/"};
+    if (ac != 2)
+    {
+        std::cerr << "Error: usage: ./RPN \"expression\"" << std::endl;
+        return 1;
+    }
+
     std::stack<long> num;// this will hold numbers
     // std::stack<int> op;// this will operation
     RPN l;
@@ -137,25 +148,19 @@ int main(int ac, char **av)
     long res = 0;
     try
     {
-         if (ac != 2)
-        {
-            throw std::runtime_error("Error , it must be like ./RPN \" 7 7 * 7 - \" " );
-            // std::cerr << "Error , it must be like ./RPN" << " \" 7 7 * 7 - \" " << std::endl;
-            // return 1;
-        }
         while(ss >> ch)
         {
             // std::cout << ch << " ";
             if (isnum(ch))
                 num.push(ch[0] - '0');
 
-            else
+            else if (isOperator(ch))
             {
                 if (num.size() < 2)
                 {
                     // std::cout << "Error it sould be a number between 0-9" << std::endl;
                     // std::cout << "Error" << std::endl;
-                    throw std::runtime_error("Error it sould be a number between 0-9");
+                    throw std::runtime_error("Error");
 
                     // return 1;
                 }
@@ -168,6 +173,10 @@ int main(int ac, char **av)
 
                 res = l.operation(a , b, ch);
                 num.push(res);
+            }
+            else
+            {
+                throw std::runtime_error("Error");
             }
         }
         if (num.size() != 1)

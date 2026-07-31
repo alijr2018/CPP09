@@ -6,6 +6,9 @@
 #include <vector>
 #include <cmath>
 #include <utility>
+#include <cstdlib>
+#include <climits>
+#include <cerrno>
 
 class PmergeMe
 {

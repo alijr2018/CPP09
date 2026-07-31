@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <cctype>
+#include <cerrno>
 
 class Bitcoin
 {

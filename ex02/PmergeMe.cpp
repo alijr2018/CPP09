@@ -1,5 +1,22 @@
 #include "PmergeMe.hpp"
 long comparisons = 0;
+
+bool isStrictPositiveInt(const std::string &token)
+{
+    if (token.empty())
+        return false;
+
+    char *end = NULL;
+    errno = 0;
+    long value = std::strtol(token.c_str(), &end, 10);
+
+    if (*end != '\0' || errno == ERANGE)
+        return false;
+    if (value <= 0 || value > INT_MAX)
+        return false;
+    return true;
+}
+
 std::vector<int> ernst(int n)// this function create the Jacobsthal numbers. sequence
 {
 
@@ -304,7 +321,6 @@ std::vector<int> fordFunc(std::vector<std::pair<int, int> > &pairs, int straggle
     //     std::cout << "(" << it->first << "," << it->second << ") ";
     // }
 
-    std::cout << std::endl;
     // Step 5: create main chain and pend
 
     std::vector<int> mainChain;
@@ -392,18 +408,24 @@ std::vector<int> fordFunc(std::vector<std::pair<int, int> > &pairs, int straggle
 
 int main(int ac, char **av)
 {
+    if (ac < 2)
+    {
+        std::cerr << "Error" << std::endl;
+        return 1;
+    }
+
     // std::vector<std::vector<int> > pairs;
     std::vector<int> pair;
 
     for (int i = 1; i < ac ;i++)
     {
-        std::stringstream ss(av[i]);
-
-        int num;
-
-        while(ss >> num)
-            pair.push_back(num);
-
+        std::string token(av[i]);
+        if (!isStrictPositiveInt(token))
+        {
+            std::cerr << "Error" << std::endl;
+            return 1;
+        }
+        pair.push_back(std::atoi(token.c_str()));
     }
     std::vector<std::pair<int, int> > pairs;
 

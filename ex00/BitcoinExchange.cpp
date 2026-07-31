@@ -85,7 +85,7 @@ bool validValue(const std::string &value)
     // float n = std::atof(value.c_str());
     double n = change(value);
 
-    if (n <= 0 || n > 1000)
+    if (n < 0 || n > 1000)
         return false;
 
     return true;
@@ -244,5 +244,4 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
     // }
 
 }
-
 
