@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <climits>
 #include <exception>
+#include <cctype>
 
 
 // template <typename T = long>

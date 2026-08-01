@@ -3,12 +3,12 @@
 // as the container used it will be used stack 
 // 3 3 + => 3 + 3 => 6
 
-bool check(const std::string &h)
-{
-    if (h.size() != 1)
-        return false;
-    return true;
-}
+// bool check(const std::string &h)
+// {
+//     if (h.size() != 1)
+//         return false;
+//     return true;
+// }
 long RPN::operation(long a, long b, const std::string &op)
 {
     if (op == "+")
@@ -92,20 +92,20 @@ long RPN::operation(long a, long b, const std::string &op)
         {
             // std::cout << "Error: division by zero" << std::endl;
             // exit(1);
-            throw std::runtime_error("Error: division by zero");
+            throw std::runtime_error("Error");
 
         }
 
         if (a == LONG_MIN && b == -1)
         {
-            throw std::runtime_error("Error: overflow");
+            throw std::runtime_error("Error");
 
             // std::cout << "Error: overflow" << std::endl;
             // exit(1);
         }
         return a / b;
     }
-    throw std::runtime_error("Error operator not found");
+    throw std::runtime_error("Error");
 
     // std::cout << "Error operator not found" << std::endl;
     // return -1;
