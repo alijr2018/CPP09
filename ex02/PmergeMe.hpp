@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <climits>
 #include <cerrno>
+#include <deque>
+#include <ctime>
 
 class PmergeMe
 {
