@@ -1,0 +1,7 @@
+for file in test_*.txt final_test.txt date_edge.txt malformed.txt; do
+    echo "==============================" >> results.txt
+    echo "Testing: $file" >> results.txt
+    echo "==============================" >> results.txt
+    ./btc "$file" >> results.txt
+    echo >> results.txt
+done

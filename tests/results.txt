@@ -1,0 +1,477 @@
+==============================
+Testing: test_before_db.txt
+==============================
+Error: bad input => 2008-12-31
+
+==============================
+Testing: test_blank.txt
+==============================
+2012-01-01 => 1 = 4.47
+2012-01-02 => 2 = 10.90
+
+==============================
+Testing: test_closest.txt
+==============================
+2011-01-08 => 2 = 0.64
+2011-01-10 => 1 = 0.33
+2011-01-15 => 5 = 2.10
+
+==============================
+Testing: test_decimal.txt
+==============================
+2012-01-01 => 0.5 = 2.23
+2012-01-01 => .5 = 2.23
+2012-01-01 => 5. = 22.35
+
+==============================
+Testing: test_empty.txt
+==============================
+Error: empty input file.
+
+==============================
+Testing: test_empty_date.txt
+==============================
+Error: bad input => | 5
+
+==============================
+Testing: test_empty_value.txt
+==============================
+Error: bad input => 2012-01-01 |
+
+==============================
+Testing: test_header.txt
+==============================
+Error: invalid input header.
+
+==============================
+Testing: test_huge.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_invalid_date.txt
+==============================
+Error: bad input => 2012-13-01 | 2
+Error: bad input => 2012-00-01 | 2
+Error: bad input => 2012-01-32 | 2
+Error: bad input => 2012-02-30 | 2
+Error: bad input => 2011-04-31 | 2
+
+==============================
+Testing: test_invalid_number.txt
+==============================
+Error: bad input => 2012-01-11 | abc
+Error: bad input => 2012-01-11 | 12abc
+Error: bad input => 2012-01-11 | 1.2.3
+Error: bad input => 2012-01-11 | ++5
+Error: bad input => 2012-01-11 | --
+
+==============================
+Testing: test_large.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_leap.txt
+==============================
+2012-02-29 => 2 = 9.96
+Error: bad input => 2011-02-29 | 2
+Error: bad input => 2000-02-29
+Error: bad input => 1900-02-29 | 2
+
+==============================
+Testing: test_negative.txt
+==============================
+Error: not a positive number.
+Error: not a positive number.
+
+==============================
+Testing: test_pipe.txt
+==============================
+Error: bad input => 2012-01-01 | 5 | 6
+Error: bad input => 2012|01|01
+
+==============================
+Testing: test_separator.txt
+==============================
+Error: bad input => 2012-01-01,5
+Error: bad input => 2012-01-01 : 5
+Error: bad input => 2012-01-01
+Error: bad input => |
+
+==============================
+Testing: test_spaces.txt
+==============================
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+
+==============================
+Testing: test_valid.txt
+==============================
+2011-01-03 => 3 = 0.90
+2011-01-03 => 2 = 0.60
+2011-01-03 => 1 = 0.30
+2011-01-03 => 1.2 = 0.36
+2011-01-09 => 1 = 0.32
+2012-01-11 => 1 = 7.10
+
+==============================
+Testing: test_zero.txt
+==============================
+2012-01-01 => 0005 = 22.35
+2012-01-01 => 0005.50 = 24.58
+
+==============================
+Testing: final_test.txt
+==============================
+2012-01-01 => 1 = 4.47
+Error: not a positive number.
+Error: too large a number.
+Error: bad input => 2012-01-01 | abc
+Error: bad input => 2012-02-30 | 5
+Error: bad input => 2012-01-01 |
+2012-01-01 => .5 = 2.23
+2012-01-01 => +5 = 22.35
+2012-01-01 => 0005.5 = 24.58
+Error: bad input => 2012-01-01 | 1.2.3
+
+==============================
+Testing: date_edge.txt
+==============================
+Error: bad input => 0000-01-01
+Error: bad input => 2024-11-31 | 1
+Error: bad input => 2024-04-31 | 1
+Error: bad input => 2024-06-31 | 1
+Error: bad input => 2024-09-31 | 1
+Error: bad input => 2024-12-32 | 1
+
+==============================
+Testing: malformed.txt
+==============================
+Error: bad input => 2012-01-01||5
+Error: bad input => 2012-01-01 | | 5
+Error: bad input => |
+Error: bad input => 2012-01-01
+
+==============================
+Testing: test_before_db.txt
+==============================
+Error: bad input => 2008-12-31
+
+==============================
+Testing: test_blank.txt
+==============================
+2012-01-01 => 1 = 4.47
+2012-01-02 => 2 = 10.90
+
+==============================
+Testing: test_closest.txt
+==============================
+2011-01-08 => 2 = 0.64
+2011-01-10 => 1 = 0.33
+2011-01-15 => 5 = 2.10
+
+==============================
+Testing: test_decimal.txt
+==============================
+2012-01-01 => 0.5 = 2.23
+2012-01-01 => .5 = 2.23
+2012-01-01 => 5. = 22.35
+
+==============================
+Testing: test_empty.txt
+==============================
+Error: empty input file.
+
+==============================
+Testing: test_empty_date.txt
+==============================
+Error: bad input => | 5
+
+==============================
+Testing: test_empty_value.txt
+==============================
+Error: bad input => 2012-01-01 |
+
+==============================
+Testing: test_header.txt
+==============================
+Error: invalid input header.
+
+==============================
+Testing: test_huge.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_invalid_date.txt
+==============================
+Error: bad input => 2012-13-01 | 2
+Error: bad input => 2012-00-01 | 2
+Error: bad input => 2012-01-32 | 2
+Error: bad input => 2012-02-30 | 2
+Error: bad input => 2011-04-31 | 2
+
+==============================
+Testing: test_invalid_number.txt
+==============================
+Error: bad input => 2012-01-11 | abc
+Error: bad input => 2012-01-11 | 12abc
+Error: bad input => 2012-01-11 | 1.2.3
+Error: bad input => 2012-01-11 | ++5
+Error: bad input => 2012-01-11 | --
+
+==============================
+Testing: test_large.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_leap.txt
+==============================
+2012-02-29 => 2 = 9.96
+Error: bad input => 2011-02-29 | 2
+Error: bad input => 2000-02-29
+Error: bad input => 1900-02-29 | 2
+
+==============================
+Testing: test_negative.txt
+==============================
+Error: not a positive number.
+Error: not a positive number.
+
+==============================
+Testing: test_pipe.txt
+==============================
+Error: bad input => 2012-01-01 | 5 | 6
+Error: bad input => 2012|01|01
+
+==============================
+Testing: test_separator.txt
+==============================
+Error: bad input => 2012-01-01,5
+Error: bad input => 2012-01-01 : 5
+Error: bad input => 2012-01-01
+Error: bad input => |
+
+==============================
+Testing: test_spaces.txt
+==============================
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+
+==============================
+Testing: test_valid.txt
+==============================
+2011-01-03 => 3 = 0.90
+2011-01-03 => 2 = 0.60
+2011-01-03 => 1 = 0.30
+2011-01-03 => 1.2 = 0.36
+2011-01-09 => 1 = 0.32
+2012-01-11 => 1 = 7.10
+
+==============================
+Testing: test_zero.txt
+==============================
+2012-01-01 => 0005 = 22.35
+2012-01-01 => 0005.50 = 24.58
+
+==============================
+Testing: final_test.txt
+==============================
+2012-01-01 => 1 = 4.47
+Error: not a positive number.
+Error: too large a number.
+Error: bad input => 2012-01-01 | abc
+Error: bad input => 2012-02-30 | 5
+Error: bad input => 2012-01-01 |
+2012-01-01 => .5 = 2.23
+2012-01-01 => +5 = 22.35
+2012-01-01 => 0005.5 = 24.58
+Error: bad input => 2012-01-01 | 1.2.3
+
+==============================
+Testing: date_edge.txt
+==============================
+Error: bad input => 0000-01-01
+Error: bad input => 2024-11-31 | 1
+Error: bad input => 2024-04-31 | 1
+Error: bad input => 2024-06-31 | 1
+Error: bad input => 2024-09-31 | 1
+Error: bad input => 2024-12-32 | 1
+
+==============================
+Testing: malformed.txt
+==============================
+Error: bad input => 2012-01-01||5
+Error: bad input => 2012-01-01 | | 5
+Error: bad input => |
+Error: bad input => 2012-01-01
+
+==============================
+Testing: test_before_db.txt
+==============================
+Error: bad input => 2008-12-31
+
+==============================
+Testing: test_blank.txt
+==============================
+2012-01-01 => 1 = 4.47
+2012-01-02 => 2 = 10.90
+
+==============================
+Testing: test_closest.txt
+==============================
+2011-01-08 => 2 = 0.64
+2011-01-10 => 1 = 0.33
+2011-01-15 => 5 = 2.10
+
+==============================
+Testing: test_decimal.txt
+==============================
+2012-01-01 => 0.5 = 2.23
+2012-01-01 => .5 = 2.23
+2012-01-01 => 5. = 22.35
+
+==============================
+Testing: test_empty.txt
+==============================
+Error: empty input file.
+
+==============================
+Testing: test_empty_date.txt
+==============================
+Error: bad input => | 5
+
+==============================
+Testing: test_empty_value.txt
+==============================
+Error: bad input => 2012-01-01 |
+
+==============================
+Testing: test_header.txt
+==============================
+Error: invalid input header.
+
+==============================
+Testing: test_huge.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_invalid_date.txt
+==============================
+Error: bad input => 2012-13-01 | 2
+Error: bad input => 2012-00-01 | 2
+Error: bad input => 2012-01-32 | 2
+Error: bad input => 2012-02-30 | 2
+Error: bad input => 2011-04-31 | 2
+
+==============================
+Testing: test_invalid_number.txt
+==============================
+Error: bad input => 2012-01-11 | abc
+Error: bad input => 2012-01-11 | 12abc
+Error: bad input => 2012-01-11 | 1.2.3
+Error: bad input => 2012-01-11 | ++5
+Error: bad input => 2012-01-11 | --
+
+==============================
+Testing: test_large.txt
+==============================
+Error: too large a number.
+Error: too large a number.
+
+==============================
+Testing: test_leap.txt
+==============================
+2012-02-29 => 2 = 9.96
+Error: bad input => 2011-02-29 | 2
+Error: bad input => 2000-02-29
+Error: bad input => 1900-02-29 | 2
+
+==============================
+Testing: test_negative.txt
+==============================
+Error: not a positive number.
+Error: not a positive number.
+
+==============================
+Testing: test_pipe.txt
+==============================
+Error: bad input => 2012-01-01 | 5 | 6
+Error: bad input => 2012|01|01
+
+==============================
+Testing: test_separator.txt
+==============================
+Error: bad input => 2012-01-01,5
+Error: bad input => 2012-01-01 : 5
+Error: bad input => 2012-01-01
+Error: bad input => |
+
+==============================
+Testing: test_spaces.txt
+==============================
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+2012-01-01 => 5 = 22.35
+
+==============================
+Testing: test_valid.txt
+==============================
+2011-01-03 => 3 = 0.90
+2011-01-03 => 2 = 0.60
+2011-01-03 => 1 = 0.30
+2011-01-03 => 1.2 = 0.36
+2011-01-09 => 1 = 0.32
+2012-01-11 => 1 = 7.10
+
+==============================
+Testing: test_zero.txt
+==============================
+2012-01-01 => 0005 = 22.35
+2012-01-01 => 0005.50 = 24.58
+
+==============================
+Testing: final_test.txt
+==============================
+2012-01-01 => 1 = 4.47
+Error: not a positive number.
+Error: too large a number.
+Error: bad input => 2012-01-01 | abc
+Error: bad input => 2012-02-30 | 5
+Error: bad input => 2012-01-01 |
+2012-01-01 => .5 = 2.23
+2012-01-01 => +5 = 22.35
+2012-01-01 => 0005.5 = 24.58
+Error: bad input => 2012-01-01 | 1.2.3
+
+==============================
+Testing: date_edge.txt
+==============================
+Error: bad input => 0000-01-01
+Error: bad input => 2024-11-31 | 1
+Error: bad input => 2024-04-31 | 1
+Error: bad input => 2024-06-31 | 1
+Error: bad input => 2024-09-31 | 1
+Error: bad input => 2024-12-32 | 1
+
+==============================
+Testing: malformed.txt
+==============================
+Error: bad input => 2012-01-01||5
+Error: bad input => 2012-01-01 | | 5
+Error: bad input => |
+Error: bad input => 2012-01-01
+
