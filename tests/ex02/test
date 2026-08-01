@@ -1,0 +1,103 @@
+#!/bin/bash
+
+EXEC=./PmergeMe
+
+echo "=============================="
+echo "Building..."
+echo "=============================="
+make re || exit 1
+
+echo
+echo "=============================="
+echo "Basic tests"
+echo "=============================="
+
+echo
+echo "1) Single element"
+$EXEC 42
+
+echo
+echo "2) Two elements"
+$EXEC 2 1
+
+echo
+echo "3) Odd number of elements"
+$EXEC 5 3 8 1 9 2 7
+
+echo
+echo "4) Even number of elements"
+$EXEC 42 17 3 99 12 8 1 77 50 6
+
+echo
+echo "5) Already sorted"
+$EXEC 1 2 3 4 5 6 7 8 9 10
+
+echo
+echo "6) Reverse sorted"
+$EXEC 10 9 8 7 6 5 4 3 2 1
+
+echo
+echo "7) Random values"
+$EXEC 91 13 56 2 77 31 18 65 99 7
+
+echo
+echo "=============================="
+echo "Duplicate test"
+echo "=============================="
+
+$EXEC 4 1 4 2
+
+echo
+echo "=============================="
+echo "Error tests"
+echo "=============================="
+
+echo
+echo "Negative"
+$EXEC -1 2
+
+echo
+echo "Character"
+$EXEC 1 a 3
+
+echo
+echo "Overflow"
+$EXEC 2147483648
+
+echo
+echo "Float"
+$EXEC 1 2.5 3
+
+echo
+echo "Empty argument"
+$EXEC ""
+
+echo
+echo "No arguments"
+$EXEC
+
+echo
+echo "=============================="
+echo "Large random test (100 elements)"
+echo "=============================="
+
+$EXEC $(shuf -i 1-100000 -n 100)
+
+echo
+echo "=============================="
+echo "Stress test (3000 elements)"
+echo "=============================="
+
+time $EXEC $(shuf -i 1-100000 -n 3000) > /dev/null
+
+echo
+echo "=============================="
+echo "Reverse 3000 elements"
+echo "=============================="
+
+time $EXEC $(seq 3000 -1 1) > /dev/null
+
+echo
+echo "=============================="
+echo "Finished!"
+echo "=============================="
