@@ -3,10 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <ostream>
-#include <algorithm>
 #include <map>
-#include <sstream>
 #include <iomanip>
 #include <cstdlib>
 #include <cctype>
