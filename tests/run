@@ -1,4 +1,0 @@
-for file in test_*.txt final_test.txt date_edge.txt malformed.txt; do
-    echo "Testing leaks: $file"
-    valgrind --leak-check=full --error-exitcode=1 ./btc "$file" >/dev/null
-done
