@@ -14,6 +14,15 @@
 
 class PmergeMe
 {
+    public:
+        PmergeMe();
+        ~PmergeMe();
+        bool isStrictPositiveInt(const std::string &token);
+        std::vector<int> mergeIns(const std::vector<int> &input);
+        std::deque<int> mergeIns(const std::deque<int> &input);
+        long comparisons;
+        void resetCom();
+
 
 };
 
