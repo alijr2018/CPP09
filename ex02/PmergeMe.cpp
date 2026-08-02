@@ -102,86 +102,7 @@ std::deque<int> generateInsertionOrderDe(int size)
     return order;
 }
 
-void simpleSort(std::vector<int>& numbers)
-{
-    if (numbers.size() <= 1)
-        return;
 
-    std::vector<int> left;
-    std::vector<int> right;
-
-    for (size_t i = 0; i < numbers.size(); i++)
-    {
-        if (i < numbers.size() / 2)
-            left.push_back(numbers[i]);
-        else
-            right.push_back(numbers[i]);
-    }
-
-    simpleSort(left);
-    simpleSort(right);
-
-    numbers.clear();
-
-    size_t i = 0;
-    size_t j = 0;
-
-    while (i < left.size() && j < right.size())
-    {
-
-        if (left[i] < right[j])
-            numbers.push_back(left[i++]);
-        else
-            numbers.push_back(right[j++]);
-    }
-
-    while (i < left.size())
-        numbers.push_back(left[i++]);
-
-    while (j < right.size())
-        numbers.push_back(right[j++]);
-}
-
-
-void simpleSort(std::deque<int>& numbers)
-{
-    if (numbers.size() <= 1)
-        return;
-
-    std::deque<int> left;
-    std::deque<int> right;
-
-    for (size_t i = 0; i < numbers.size(); i++)
-    {
-        if (i < numbers.size() / 2)
-            left.push_back(numbers[i]);
-        else
-            right.push_back(numbers[i]);
-    }
-
-    simpleSort(left);
-    simpleSort(right);
-
-    numbers.clear();
-
-    size_t i = 0;
-    size_t j = 0;
-
-    while (i < left.size() && j < right.size())
-    {
-
-        if (left[i] < right[j])
-            numbers.push_back(left[i++]);
-        else
-            numbers.push_back(right[j++]);
-    }
-
-    while (i < left.size())
-        numbers.push_back(left[i++]);
-
-    while (j < right.size())
-        numbers.push_back(right[j++]);
-}
 void binaryInsert(std::vector<int>& mainChain, int value, int limit)
 {
     if (limit > (int)mainChain.size())
@@ -226,91 +147,6 @@ void binaryInsert(std::deque<int>& mainChain, int value, int limit)
     mainChain.insert(mainChain.begin() + left, value);
 }
 
-void fordSortWinners(std::vector<std::pair<int, int> >& pairs)
-{
-    if (pairs.size() <= 1)
-        return;
-
-    for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        if (it->first < it->second)
-            std::swap(it->first, it->second);
-    }
-
-    std::vector<int> winners;
-
-    for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        winners.push_back(it->first);
-    }
-
-
-    simpleSort(winners);
-
-    std::vector<std::pair<int,int> > sortedPairs;
-    std::vector<bool> used(pairs.size(), false);
-
-    for (std::vector<int>::iterator w = winners.begin(); w != winners.end(); ++w)
-    {
-        for (size_t i = 0; i < pairs.size(); i++)
-        {
-            if (!used[i] && pairs[i].first == *w)
-            {
-                sortedPairs.push_back(pairs[i]);
-                used[i] = true;
-                break;
-            }
-        }
-    }
-
-    pairs = sortedPairs;
-}
-
-void fordSortWinners(std::deque<std::pair<int, int> >& pairs)
-{
-    if (pairs.size() <= 1)
-        return;
-
-
-    // make sure first is the winner
-    for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        if (it->first < it->second)
-            std::swap(it->first, it->second);
-    }
-
-    std::deque<int> winners;
-
-    for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        winners.push_back(it->first);
-    }
-
-    simpleSort(winners);
-
-    std::deque<std::pair<int,int> > sortedPairs;
-    std::deque<bool> used(pairs.size(), false);
-
-    for (std::deque<int>::iterator w = winners.begin();
-        w != winners.end(); ++w)
-    {
-        for (size_t i = 0; i < pairs.size(); i++)
-        {
-            if (!used[i] && pairs[i].first == *w)
-            {
-                sortedPairs.push_back(pairs[i]);
-                used[i] = true;
-                break;
-            }
-        }
-    }
-
-    pairs = sortedPairs;
-}
 
 std::deque<std::pair<int,int> > PmergeMe::sortPairs(std::deque<std::pair<int,int> > pairs)
 {
@@ -426,7 +262,8 @@ std::vector<int> PmergeMe::fordFunc(std::vector<std::pair<int, int> > &pairs, in
             }
         }
 
-        binaryInsert(mainChain, value, limit + 1);
+        binaryInsert(mainChain, value, limit);
+        // binaryInsert(mainChain, value, limit + 1);
     }
     if (hasStraggler)
     {
@@ -551,7 +388,8 @@ std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int 
             }
         }
 
-        binaryInsert(mainChain, value, limit + 1);
+        binaryInsert(mainChain, value, limit);
+        // binaryInsert(mainChain, value, limit + 1);
     }
 
 
