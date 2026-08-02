@@ -1,9 +1,12 @@
 #include "PmergeMe.hpp"
-long comparisons = 0;
 
-void PmergeMe::resetCom()
+
+PmergeMe::PmergeMe()
 {
-    this->comparisons = 0;
+}
+
+PmergeMe::~PmergeMe()
+{
 }
 
 
@@ -23,7 +26,7 @@ bool PmergeMe::isStrictPositiveInt(const std::string &token)
     return true;
 }
 
-std::vector<int> ernst(int n)// this function create the Jacobsthal numbers. sequence
+std::vector<int> ernst(int n)
 {
 
     std::vector<int> Jn;
@@ -32,21 +35,11 @@ std::vector<int> ernst(int n)// this function create the Jacobsthal numbers. seq
     for (int i = 2; i <= n; i++)
     {
         Jn.push_back((std::pow(2, i) - std::pow(-1, i)) / 3);
-        // Jn.push_back((2^n - (-1)^n) / 3);
     }
-    // for (std::vector<int>::iterator it = Jn.begin(); it != Jn.end(); it++)
-    // {
-    //     std::cout << *it << std::endl;
-    // }
-    // for (int i = 0; i < Jn.size(); i++)
-    // {
-    //     std::cout << Jn[i] << std::endl;
-    // }
     return Jn;
-    // return 0;
 }
 
-std::deque<int> ernstDe(int n)// this function create the Jacobsthal numbers. sequence
+std::deque<int> ernstDe(int n)
 {
 
     std::deque<int> Jn;
@@ -55,53 +48,39 @@ std::deque<int> ernstDe(int n)// this function create the Jacobsthal numbers. se
     for (int i = 2; i <= n; i++)
     {
         Jn.push_back((std::pow(2, i) - std::pow(-1, i)) / 3);
-        // Jn.push_back((2^n - (-1)^n) / 3);
     }
-    // for (std::vector<int>::iterator it = Jn.begin(); it != Jn.end(); it++)
-    // {
-    //     std::cout << *it << std::endl;
-    // }
-    // for (int i = 0; i < Jn.size(); i++)
-    // {
-    //     std::cout << Jn[i] << std::endl;
-    // }
     return Jn;
-    // return 0;
 }
 
 std::vector<int> generateInsertionOrder(int size)
 {
     std::vector<int> order;
 
-    if (size == 0)
+    if (size <= 0)
         return order;
 
-    std::vector<int> jacob = ernst(size + 5);
 
-    int previous = 1;
+    std::vector<int> jacob = ernst(size + 10);
+
+    int last = 1;
 
     for (size_t i = 3; i < jacob.size(); i++)
     {
-        int current = jacob[i];
+        int j = jacob[i];
 
-        if (current > size)
+        if (j > size)
             break;
 
-        order.push_back(current);
+        for (int k = j; k > last; k--)
+            order.push_back(k - 1);
 
-        for (int j = current - 1; j > previous; j--)
-        {
-            order.push_back(j);
-        }
-
-        previous = current;
+        last = j;
     }
 
-    // Add missing last elements
-    for (int i = previous + 1; i <= size; i++)
-    {
+
+    for (int i = last; i < size; i++)
         order.push_back(i);
-    }
+
 
     return order;
 }
@@ -110,10 +89,18 @@ std::deque<int> generateInsertionOrderDe(int size)
 {
     std::deque<int> order;
 
-    if (size == 0)
+    if (size <= 0)
         return order;
 
-    std::deque<int> jacob = ernstDe(size + 5);
+    std::deque<int> jacob;
+    jacob.push_back(0);
+    jacob.push_back(1);
+
+    while (jacob.back() < size)
+    {
+        int n = jacob.size();
+        jacob.push_back(jacob[n - 1] + 2 * jacob[n - 2]);
+    }
 
     int previous = 1;
 
@@ -122,56 +109,18 @@ std::deque<int> generateInsertionOrderDe(int size)
         int current = jacob[i];
 
         if (current > size)
-            break;
+            current = size;
 
-        order.push_back(current);
-
-        for (int j = current - 1; j > previous; j--)
-        {
-            order.push_back(j);
-        }
+        for (int j = current; j > previous; j--)
+            order.push_back(j - 1);
 
         previous = current;
-    }
 
-    // Add missing last elements
-    for (int i = previous + 1; i <= size; i++)
-    {
-        order.push_back(i);
+        if (current == size)
+            break;
     }
 
     return order;
-}
-
-void sortPairs(std::vector<std::pair<int, int> > &pairs)
-{
-    if (pairs.size() <= 1)
-        return ;
-    std::vector<int> larger;
-
-    for (std::vector<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
-    {
-        larger.push_back(it->first);
-    }
-    std::cout << "larger elements:" << std::endl;
-    for (std::vector<int>::iterator it = larger.begin(); it != larger.end(); ++it)
-    {
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-}
-void sortByFirst(std::vector<std::pair<int,int> >& pairs)
-{
-    for (size_t i = 0; i < pairs.size(); i++)
-    {
-        for (size_t j = i + 1; j < pairs.size(); j++)
-        {
-            if (pairs[i].first > pairs[j].first)
-            {
-                std::swap(pairs[i], pairs[j]);
-            }
-        }
-    }
 }
 
 void simpleSort(std::vector<int>& numbers)
@@ -200,7 +149,6 @@ void simpleSort(std::vector<int>& numbers)
 
     while (i < left.size() && j < right.size())
     {
-        comparisons++;
 
         if (left[i] < right[j])
             numbers.push_back(left[i++]);
@@ -242,7 +190,6 @@ void simpleSort(std::deque<int>& numbers)
 
     while (i < left.size() && j < right.size())
     {
-        comparisons++;
 
         if (left[i] < right[j])
             numbers.push_back(left[i++]);
@@ -268,7 +215,6 @@ void binaryInsert(std::vector<int>& mainChain, int value, int limit)
     {
         int mid = (left + right) / 2;
 
-        comparisons++;
 
         if (mainChain[mid] < value)
             left = mid + 1;
@@ -291,7 +237,6 @@ void binaryInsert(std::deque<int>& mainChain, int value, int limit)
     {
         int mid = (left + right) / 2;
 
-        comparisons++;
 
         if (mainChain[mid] < value)
             left = mid + 1;
@@ -307,8 +252,6 @@ void fordSortWinners(std::vector<std::pair<int, int> >& pairs)
     if (pairs.size() <= 1)
         return;
 
-
-    // make sure first is the winner
     for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
          it != pairs.end(); ++it)
     {
@@ -316,8 +259,6 @@ void fordSortWinners(std::vector<std::pair<int, int> >& pairs)
             std::swap(it->first, it->second);
     }
 
-
-    // extract winners
     std::vector<int> winners;
 
     for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
@@ -327,16 +268,12 @@ void fordSortWinners(std::vector<std::pair<int, int> >& pairs)
     }
 
 
-    // sort winners recursively
     simpleSort(winners);
 
-
-    // rebuild pairs according to sorted winners
     std::vector<std::pair<int,int> > sortedPairs;
     std::vector<bool> used(pairs.size(), false);
 
-    for (std::vector<int>::iterator w = winners.begin();
-        w != winners.end(); ++w)
+    for (std::vector<int>::iterator w = winners.begin(); w != winners.end(); ++w)
     {
         for (size_t i = 0; i < pairs.size(); i++)
         {
@@ -366,8 +303,6 @@ void fordSortWinners(std::deque<std::pair<int, int> >& pairs)
             std::swap(it->first, it->second);
     }
 
-
-    // extract winners
     std::deque<int> winners;
 
     for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
@@ -376,12 +311,8 @@ void fordSortWinners(std::deque<std::pair<int, int> >& pairs)
         winners.push_back(it->first);
     }
 
-
-    // sort winners recursively
     simpleSort(winners);
 
-
-    // rebuild pairs according to sorted winners
     std::deque<std::pair<int,int> > sortedPairs;
     std::deque<bool> used(pairs.size(), false);
 
@@ -401,11 +332,45 @@ void fordSortWinners(std::deque<std::pair<int, int> >& pairs)
 
     pairs = sortedPairs;
 }
-// std::vector<int> fordFunc(std::vector<int> &pair)
-// void  fordFunc(std::vector<int> &pair)
-// void fordFunc(std::vector<std::pair<int, int> > &pairs)
-// void fordFunc(std::vector<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
-std::vector<int> fordFunc(std::vector<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
+
+std::deque<std::pair<int,int> > PmergeMe::sortPairs(std::deque<std::pair<int,int> > pairs)
+{
+    if (pairs.size() <= 1)
+        return pairs;
+
+    for (size_t i = 0; i < pairs.size(); i++)
+    {
+        if (pairs[i].first < pairs[i].second)
+            std::swap(pairs[i].first, pairs[i].second);
+    }
+
+    std::deque<int> winners;
+
+    for (size_t i = 0; i < pairs.size(); i++)
+        winners.push_back(pairs[i].first);
+
+    winners = mergeInsd(winners);
+
+    std::deque<std::pair<int,int> > result;
+    std::vector<bool> used(pairs.size(), false);
+
+    for (size_t i = 0; i < winners.size(); i++)
+    {
+        for (size_t j = 0; j < pairs.size(); j++)
+        {
+            if (!used[j] && pairs[j].first == winners[i])
+            {
+                result.push_back(pairs[j]);
+                used[j] = true;
+                break;
+            }
+        }
+    }
+
+    return result;
+}
+
+std::vector<int> PmergeMe::fordFunc(std::vector<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
 {
     if (pairs.size() == 0)
     {
@@ -425,9 +390,7 @@ std::vector<int> fordFunc(std::vector<std::pair<int, int> > &pairs, int straggle
         result.push_back(pairs[0].first);
 
         if (hasStraggler)
-            result.push_back(straggler);
-
-        simpleSort(result);
+            binaryInsert(result, straggler, result.size());
 
         return result;
     }
@@ -435,167 +398,104 @@ std::vector<int> fordFunc(std::vector<std::pair<int, int> > &pairs, int straggle
     // Step 1: put larger element first
     for (std::vector<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
-        comparisons++;
 
         if (it->first < it->second)
             std::swap(it->first, it->second);
     }
 
 
-    // Step 2: extract larger elements
-    std::vector<int> larger;
-
-    for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        larger.push_back(it->first);
-    }
-
-
-    // Step 3: recursive Ford-Johnson sorting of larger elements
-
-    std::vector<std::pair<int,int> > recursivePairs;
-
-    for (std::vector<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
-    {
-        recursivePairs.push_back(*it);
-    }
-
-    fordSortWinners(recursivePairs);
-
-
-    larger.clear();
-
-    for (std::vector<std::pair<int,int> >::iterator it = recursivePairs.begin();
-         it != recursivePairs.end(); ++it)
-    {
-        larger.push_back(it->first);
-    }
-
-
-    // Step 4: rebuild pairs according to sorted winners
-
-    std::vector<std::pair<int,int> > sortedPairs;
-    std::vector<bool> used(pairs.size(), false);
-
-    for (std::vector<int>::iterator num = larger.begin();
-        num != larger.end(); ++num)
-    {
-        for (size_t i = 0; i < pairs.size(); i++)
-        {
-            comparisons++;
-
-            if (!used[i] && pairs[i].first == *num)
-            {
-                sortedPairs.push_back(pairs[i]);
-                used[i] = true;
-                break;
-            }
-        }
-    }
-
-    pairs = sortedPairs;
-
-    // std::cout << "After rebuilding pairs:" << std::endl;
-
-    // for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
-    //     it != pairs.end(); ++it)
-    // {
-    //     std::cout << "(" << it->first << "," << it->second << ") ";
-    // }
-
-    // Step 5: create main chain and pend
+    pairs = sortPairs(pairs);
 
     std::vector<int> mainChain;
-    // std::vector<int> pend;
     std::vector<std::pair<int,int> > pend;
 
-    // for (std::vector<std::pair<int,int> >::iterator it = pairs.begin();
-    //      it != pairs.end(); ++it)
-    // {
-    //     mainChain.push_back(it->first);
-    //     pend.push_back(it->second);
-    // }
 
     for (std::vector<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
         mainChain.push_back(it->first);
-
-        // store b and its partner a
         pend.push_back(std::make_pair(it->second, it->first));
     }
-    // std::cout << "Pend:" << std::endl;
 
-    // for (std::vector<std::pair<int,int> >::iterator it = pend.begin();
-    //     it != pend.end(); ++it)
-    // {
-    //     std::cout << "b=" << it->first 
-    //             << " partner=" << it->second << std::endl;
-    // }
-    // Step 6: insert b1
 
+    // insert first pending element immediately
     if (!pend.empty())
     {
         mainChain.insert(mainChain.begin(), pend[0].first);
         pend.erase(pend.begin());
     }
-
-
-    // Step 7: insert remaining pend
-    // (temporary order, Jacobsthal comes next)
 
     std::vector<int> order = generateInsertionOrder(pend.size() + 1);
 
     for (std::vector<int>::iterator it = order.begin(); it != order.end(); ++it)
     {
-        int index = *it - 2; 
+        int index = *it - 1;
 
         if (index < 0 || index >= (int)pend.size())
             continue;
 
-
         int value = pend[index].first;
         int partner = pend[index].second;
 
-
         int limit = 0;
 
-        for (size_t i = 0; i < mainChain.size(); i++)
+        for (size_t j = 0; j < mainChain.size(); j++)
         {
-            if (mainChain[i] == partner)
+            if (mainChain[j] == partner)
             {
-                limit = i;
+                limit = j;
                 break;
             }
         }
 
-
-        // binaryInsert(mainChain, value, limit);
         binaryInsert(mainChain, value, limit + 1);
     }
-
-
-    // Step 8: insert straggler
-
     if (hasStraggler)
     {
         binaryInsert(mainChain, straggler, mainChain.size());
     }
 
-    // Final output
-
     return mainChain;
 }
 
-PmergeMe::PmergeMe() : comparisons(0)
+std::vector<std::pair<int,int> > PmergeMe::sortPairs(std::vector<std::pair<int,int> > pairs)
 {
+    if (pairs.size() <= 1)
+        return pairs;
+
+    for (size_t i = 0; i < pairs.size(); i++)
+    {
+        if (pairs[i].first < pairs[i].second)
+            std::swap(pairs[i].first, pairs[i].second);
+    }
+
+    std::vector<int> winners;
+
+    for (size_t i = 0; i < pairs.size(); i++)
+        winners.push_back(pairs[i].first);
+
+    winners = mergeIns(winners);
+    std::vector<std::pair<int,int> > result;
+    std::vector<bool> used(pairs.size(), false);
+
+    for (size_t i = 0; i < winners.size(); i++)
+    {
+        for (size_t j = 0; j < pairs.size(); j++)
+        {
+            if (!used[j] && pairs[j].first == winners[i])
+            {
+                result.push_back(pairs[j]);
+                used[j] = true;
+                break;
+            }
+        }
+    }
+
+    return result;
 }
 
-PmergeMe::~PmergeMe()
-{
-}
 
-std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
+// std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
+std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
 {
     if (pairs.size() == 0)
     {
@@ -615,9 +515,8 @@ std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler,
         result.push_back(pairs[0].first);
 
         if (hasStraggler)
-            result.push_back(straggler);
+            binaryInsert(result, straggler, result.size());
 
-        simpleSort(result);
 
         return result;
     }
@@ -625,87 +524,16 @@ std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler,
     // Step 1: put larger element first
     for (std::deque<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
-        comparisons++;
 
         if (it->first < it->second)
             std::swap(it->first, it->second);
     }
 
-
-    // Step 2: extract larger elements
-    std::deque<int> larger;
-
-    for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
-         it != pairs.end(); ++it)
-    {
-        larger.push_back(it->first);
-    }
-
-
-    // Step 3: recursive Ford-Johnson sorting of larger elements
-
-    std::deque<std::pair<int,int> > recursivePairs;
-
-    for (std::deque<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
-    {
-        recursivePairs.push_back(*it);
-    }
-
-    fordSortWinners(recursivePairs);
-
-
-    larger.clear();
-
-    for (std::deque<std::pair<int,int> >::iterator it = recursivePairs.begin();
-         it != recursivePairs.end(); ++it)
-    {
-        larger.push_back(it->first);
-    }
-
-
-    // Step 4: rebuild pairs according to sorted winners
-
-    std::deque<std::pair<int,int> > sortedPairs;
-    std::deque<bool> used(pairs.size(), false);
-
-    for (std::deque<int>::iterator num = larger.begin();
-        num != larger.end(); ++num)
-    {
-        for (size_t i = 0; i < pairs.size(); i++)
-        {
-            comparisons++;
-
-            if (!used[i] && pairs[i].first == *num)
-            {
-                sortedPairs.push_back(pairs[i]);
-                used[i] = true;
-                break;
-            }
-        }
-    }
-
-    pairs = sortedPairs;
-
-    // std::cout << "After rebuilding pairs:" << std::endl;
-
-    // for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
-    //     it != pairs.end(); ++it)
-    // {
-    //     std::cout << "(" << it->first << "," << it->second << ") ";
-    // }
-
-    // Step 5: create main chain and pend
+    pairs = sortPairs(pairs);
 
     std::deque<int> mainChain;
-    // std::deque<int> pend;
     std::deque<std::pair<int,int> > pend;
 
-    // for (std::deque<std::pair<int,int> >::iterator it = pairs.begin();
-    //      it != pairs.end(); ++it)
-    // {
-    //     mainChain.push_back(it->first);
-    //     pend.push_back(it->second);
-    // }
 
     for (std::deque<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
@@ -714,15 +542,6 @@ std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler,
         // store b and its partner a
         pend.push_back(std::make_pair(it->second, it->first));
     }
-    // std::cout << "Pend:" << std::endl;
-
-    // for (std::deque<std::pair<int,int> >::iterator it = pend.begin();
-    //     it != pend.end(); ++it)
-    // {
-    //     std::cout << "b=" << it->first 
-    //             << " partner=" << it->second << std::endl;
-    // }
-    // Step 6: insert b1
 
     if (!pend.empty())
     {
@@ -730,23 +549,17 @@ std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler,
         pend.erase(pend.begin());
     }
 
-
-    // Step 7: insert remaining pend
-    // (temporary order, Jacobsthal comes next)
-
     std::deque<int> order = generateInsertionOrderDe(pend.size() + 1);
 
     for (std::deque<int>::iterator it = order.begin(); it != order.end(); ++it)
     {
-        int index = *it - 2; 
+        int index = *it - 1;
 
         if (index < 0 || index >= (int)pend.size())
             continue;
 
-
         int value = pend[index].first;
         int partner = pend[index].second;
-
 
         int limit = 0;
 
@@ -759,28 +572,57 @@ std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler,
             }
         }
 
-
-        // binaryInsert(mainChain, value, limit);
         binaryInsert(mainChain, value, limit + 1);
     }
 
-
-    // Step 8: insert straggler
 
     if (hasStraggler)
     {
         binaryInsert(mainChain, straggler, mainChain.size());
     }
 
-    // Final output
-
     return mainChain;
+}
+
+
+std::deque<int> PmergeMe::mergeInsd(const std::deque<int> &input)
+{
+    if (input.size() <= 1)
+        return input;
+    
+    std::deque<std::pair<int, int> > pairs;
+        
+    bool hasStraggler = (input.size() % 2 != 0);
+    int straggler = 0;
+
+    if (hasStraggler)
+        straggler = input.back();
+    for (size_t i = 0; i + 1 < input.size(); i += 2)
+    {
+        int f = input[i];
+        int s = input[i + 1];
+
+        if (f < s)
+            std::swap(f, s);
+        pairs.push_back(std::make_pair(f, s));
+    }
+
+    return fordFunc(pairs, straggler, hasStraggler);
 }
 std::vector<int> PmergeMe::mergeIns(const std::vector<int> &input)
 {
     if (input.size() <= 1)
         return input;
     
+    if (input.size() == 2)
+    {
+        std::vector<int> res = input;
+
+        if (res[0] > res[1])
+            std::swap(res[0], res[1]);
+        return res;
+    }
+        
     std::vector<std::pair<int, int> > pairs;
 
         
@@ -793,68 +635,11 @@ std::vector<int> PmergeMe::mergeIns(const std::vector<int> &input)
     {
         int f = input[i];
         int s = input[i + 1];
-        this->comparisons++;;
 
         if (f < s)
             std::swap(f, s);
         pairs.push_back(std::make_pair(f, s));
     }
 
-    // std::cout << "Pairs:\n";
-
-    // for (size_t i = 0; i < pairs.size(); i++)
-    //     std::cout << "("
-    //               << pairs[i].first
-    //               << ", "
-    //               << pairs[i].second
-    //               << ")\n";
-
-    // if (hasStraggler)
-    //     std::cout << "Straggler: " << straggler << std::endl;
-
-    // return input;
-    std::vector<int> result = fordFunc(pairs, straggler, hasStraggler);
-
-    return result;
-}
-
-std::deque<int> PmergeMe::mergeIns(const std::deque<int> &input)
-{
-    if (input.size() <= 1)
-        return input;
-    
-    std::deque<std::pair<int, int> > pairs;
-    // std::deque<int> res = input;
-
-        
-    bool hasStraggler = (input.size() % 2 != 0);
-    int straggler = 0;
-
-    if (hasStraggler)
-        straggler = input.back();
-    for (size_t i = 0; i + 1 < input.size(); i += 2)
-    {
-        int f = input[i];
-        int s = input[i + 1];
-        this->comparisons++;;
-
-        if (f < s)
-            std::swap(f, s);
-        pairs.push_back(std::make_pair(f, s));
-    }
-
-    // std::cout << "Pairs:\n";
-
-    // for (size_t i = 0; i < pairs.size(); i++)
-    //     std::cout << "("
-    //               << pairs[i].first
-    //               << ", "
-    //               << pairs[i].second
-    //               << ")\n";
-
-    // if (hasStraggler)
-    //     std::cout << "Straggler: " << straggler << std::endl;
-
-    // simpleSort(res);
-    return fordFunc(pairs, straggler, hasStraggler);
+    return (fordFunc(pairs, straggler, hasStraggler));
 }
