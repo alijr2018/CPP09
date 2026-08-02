@@ -26,32 +26,6 @@ bool PmergeMe::isStrictPositiveInt(const std::string &token)
     return true;
 }
 
-std::vector<int> ernst(int n)
-{
-
-    std::vector<int> Jn;
-    Jn.push_back(0);
-    Jn.push_back(1);
-    for (int i = 2; i <= n; i++)
-    {
-        Jn.push_back((std::pow(2, i) - std::pow(-1, i)) / 3);
-    }
-    return Jn;
-}
-
-std::deque<int> ernstDe(int n)
-{
-
-    std::deque<int> Jn;
-    Jn.push_back(0);
-    Jn.push_back(1);
-    for (int i = 2; i <= n; i++)
-    {
-        Jn.push_back((std::pow(2, i) - std::pow(-1, i)) / 3);
-    }
-    return Jn;
-}
-
 std::vector<int> generateInsertionOrder(int size)
 {
     std::vector<int> order;
@@ -59,28 +33,33 @@ std::vector<int> generateInsertionOrder(int size)
     if (size <= 0)
         return order;
 
+    std::vector<int> jacob;
+    jacob.push_back(0);
+    jacob.push_back(1);
 
-    std::vector<int> jacob = ernst(size + 10);
+    while (jacob.back() < size)
+    {
+        int n = jacob.size();
+        jacob.push_back(jacob[n - 1] + 2 * jacob[n - 2]);
+    }
 
-    int last = 1;
+    int previous = 1;
 
     for (size_t i = 3; i < jacob.size(); i++)
     {
-        int j = jacob[i];
+        int current = jacob[i];
 
-        if (j > size)
+        if (current > size)
+            current = size;
+
+        for (int j = current; j > previous; j--)
+            order.push_back(j - 1);
+
+        previous = current;
+
+        if (current == size)
             break;
-
-        for (int k = j; k > last; k--)
-            order.push_back(k - 1);
-
-        last = j;
     }
-
-
-    for (int i = last; i < size; i++)
-        order.push_back(i);
-
 
     return order;
 }
