@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-// #include <cmath>
 #include <cstdlib>
 #include <climits>
 #include <deque>
@@ -15,6 +14,8 @@ class PmergeMe
     public:
         PmergeMe();
         ~PmergeMe();
+        PmergeMe(const PmergeMe &h);
+        PmergeMe &operator=(const PmergeMe &h);
         bool isStrictPositiveInt(const std::string &token);
         std::vector<int> mergeIns(const std::vector<int> &input);
         std::deque<int> mergeInsd(const std::deque<int> &input);

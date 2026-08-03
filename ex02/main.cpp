@@ -28,8 +28,8 @@ int main(int ac, char **av)
     std::cout << std::endl;
 
 
-    std::vector<int> vec = original;
     clock_t start = clock();
+    std::vector<int> vec = original;
     std::vector<int> sorted = alpha.mergeIns(vec);
     clock_t end = clock();
     double timeUs = double(end - start) / CLOCKS_PER_SEC * 1000000;
@@ -41,8 +41,8 @@ int main(int ac, char **av)
     
     std::cout << "Time to process a range of " << original.size() << " elements with std::vector : " << timeUs << " us" << std::endl;
     
-    std::deque<int> deq(original.begin(), original.end());
     clock_t start1 = clock();
+    std::deque<int> deq(original.begin(), original.end());
     std::deque<int> sorted1 = alpha.mergeInsd(deq);
     clock_t end1 = clock();
     double timeUs1 = double(end1 - start1) / CLOCKS_PER_SEC * 1000000;

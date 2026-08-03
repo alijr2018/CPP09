@@ -9,6 +9,18 @@ PmergeMe::~PmergeMe()
 {
 }
 
+PmergeMe::PmergeMe(const PmergeMe &h)
+{
+    (void)h;
+}
+
+PmergeMe& PmergeMe::operator=(const PmergeMe &h)
+{
+    (void)h;
+    return *this;
+}
+
+
 
 bool PmergeMe::isStrictPositiveInt(const std::string &token)
 {
@@ -210,14 +222,12 @@ std::vector<int> PmergeMe::fordFunc(std::vector<std::pair<int, int> > &pairs, in
         return result;
     }
 
-    // Step 1: put larger element first
     for (std::vector<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
 
         if (it->first < it->second)
             std::swap(it->first, it->second);
     }
-
 
     pairs = sortPairs(pairs);
 
@@ -231,8 +241,6 @@ std::vector<int> PmergeMe::fordFunc(std::vector<std::pair<int, int> > &pairs, in
         pend.push_back(std::make_pair(it->second, it->first));
     }
 
-
-    // insert first pending element immediately
     if (!pend.empty())
     {
         mainChain.insert(mainChain.begin(), pend[0].first);
@@ -263,7 +271,6 @@ std::vector<int> PmergeMe::fordFunc(std::vector<std::pair<int, int> > &pairs, in
         }
 
         binaryInsert(mainChain, value, limit);
-        // binaryInsert(mainChain, value, limit + 1);
     }
     if (hasStraggler)
     {
@@ -309,8 +316,6 @@ std::vector<std::pair<int,int> > PmergeMe::sortPairs(std::vector<std::pair<int,i
     return result;
 }
 
-
-// std::deque<int> fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
 std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int straggler, bool hasStraggler)
 {
     if (pairs.size() == 0)
@@ -337,7 +342,6 @@ std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int 
         return result;
     }
 
-    // Step 1: put larger element first
     for (std::deque<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
 
@@ -354,8 +358,6 @@ std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int 
     for (std::deque<std::pair<int,int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
         mainChain.push_back(it->first);
-
-        // store b and its partner a
         pend.push_back(std::make_pair(it->second, it->first));
     }
 
@@ -389,7 +391,6 @@ std::deque<int> PmergeMe::fordFunc(std::deque<std::pair<int, int> > &pairs, int 
         }
 
         binaryInsert(mainChain, value, limit);
-        // binaryInsert(mainChain, value, limit + 1);
     }
 
 
@@ -442,7 +443,6 @@ std::vector<int> PmergeMe::mergeIns(const std::vector<int> &input)
         
     std::vector<std::pair<int, int> > pairs;
 
-        
     bool hasStraggler = (input.size() % 2 != 0);
     int straggler = 0;
 
