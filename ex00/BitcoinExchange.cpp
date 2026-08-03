@@ -57,18 +57,6 @@ bool change(const std::string &num, double &value)
     return (true);
 }
 
-bool validValue(const std::string &value)
-{
-    double n;
-    if (!change(value, n))
-        return false;
-
-    if (n < 0 || n > 1000)
-        return false;
-
-    return true;
-}
-
 void trim(std::string& s)
 {
     size_t start = s.find_first_not_of(" \t");
