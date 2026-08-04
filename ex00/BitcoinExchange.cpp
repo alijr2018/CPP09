@@ -166,6 +166,12 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
             continue;
         }
 
+        if (amount != amount)
+        {
+            std::cout << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+        
         std::map<std::string, double>::iterator it = bitout.lower_bound(dates);
 
         if (it == bitout.end() || it->first != dates)
@@ -181,4 +187,3 @@ void Bitcoin::start(std::ifstream &input,std::ifstream &data)
         std::cout << dates << " => " << values << " = "  << std::fixed << std::setprecision(2) << amount * it->second << std::endl;
     }
 }
-
